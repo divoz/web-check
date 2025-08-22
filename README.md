@@ -8,7 +8,10 @@ _A work-in-progress full-stack app for scanning browser security risks._
 
 > _**\*The goal** is to create a real-world tool that puts development and security into practice together.\*_
 
-#
+### Tech
+
+**Tech Stack:** Next.js (TypeScript), Tailwind CSS, Node.js, PostgreSQL
+**Infrastructure:** Vercel (app hosting), Neon (managed PostgreSQL host)
 
 ### 🚀 Upcoming Features
 
@@ -22,32 +25,10 @@ _Input and future functionality overview_
 ▸ User authentication (optional, future)  
 ▸ More browser-level security checks (e.g. CSP, JS risk patterns)
 
-#
-
-### Project Structure + Tech Stack
-
-```
-web-check/
-├──  client/     → React app + Tailwind (frontend)
-├──  server/     → Express, Axios + MongoDB (backend)
-├──  README.md   → Project overview and instructions
-```
-
-#
-
 ### Getting Started (Local Setup)
 
 ```
-1. Clone the repo
    git clone https://github.com/divoz/web-check.git
    cd web-check
-
-2. Install and run backend
-   cd server
-   npm install
-
-3. Install and run the frontend
-   cd ../client
-   npm install
-   npm start
+   npm run dev
 ```
