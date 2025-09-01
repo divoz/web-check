@@ -11,6 +11,7 @@ _A work-in-progress full-stack app for scanning browser security risks._
 ### Tech
 
 **Tech Stack:** Next.js (TypeScript), Tailwind CSS, Node.js, PostgreSQL
+
 **Infrastructure:** Vercel (app hosting), Neon (managed PostgreSQL host)
 
 ### 🚀 Upcoming Features
