@@ -2,33 +2,60 @@
 
 import { useState } from "react";
 
-const Page = () => {
-  const [text, setText] = useState("");
+const ScanPage = () => {
+  type ScanResult = null | { ok: boolean; error?: string };
 
-  const onSubmit = (e: React.FormEvent) => {
+  const [input, setInput] = useState<string>("");
+  const [result, setResult] = useState<ScanResult>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("submitted", text);
+    setLoading(true);
+    setResult(null);
+    try {
+      const res = await fetch("/api/scan", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ input }),
+      });
+      const data = await res.json();
+      setResult(data);
+    } catch (err: unknown) {
+      setResult({ ok: false, error: String(err) });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <main className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      {/* <main className=""> */}
-      <h1 className="text-4xl font-bold">Scan Page</h1>
-      <form onSubmit={onSubmit} className="flex flex-col gap-4 w-8/12">
+    <main className="mx-auto max-w-3xl p-6 space-y-4">
+      <h1 className="text-2xl font-bold">Scan</h1>
+
+      <form onSubmit={onSubmit} className="space-y-3">
         <textarea
-          onChange={(e) => setText(e.target.value)}
-          className="border border-gray-300 bg-gray-50 w-full rounded-lg p-2.5"
+          className="w-full h-40 border rounded p-3"
+          placeholder="Paste text or a URL; this demo just echoes it."
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
         />
         <button
           type="submit"
-          className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow mt-4"
+          className="px-4 py-2 rounded bg-black text-white disabled:opacity-50"
+          disabled={loading}
         >
-          Scan
+          {loading ? "Sending..." : "Run scan"}
         </button>
       </form>
-      {/* </main> */}
+
+      <section className="border rounded p-3">
+        <h2 className="font-semibold mb-2">Response</h2>
+        <pre className="whitespace-pre-wrap text-sm">
+          {result ? JSON.stringify(result, null, 2) : "No response yet."}
+        </pre>
+      </section>
     </main>
   );
 };
 
-export default Page;
+export default ScanPage;
