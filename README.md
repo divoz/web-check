@@ -22,7 +22,7 @@ _Input and future functionality overview_
 ▸ Clear, readable results shown in the frontend  
 ▸ Basic security scoring system (in progress)  
 ▸ Educational hints based on missing headers  
-▸ MongoDB integration for scan history (planned)  
+▸ PostgreSQL integration for scan history (planned)  
 ▸ User authentication (optional, future)  
 ▸ More browser-level security checks (e.g. CSP, JS risk patterns)
 
