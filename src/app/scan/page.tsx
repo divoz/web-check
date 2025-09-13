@@ -13,12 +13,14 @@ const ScanPage = () => {
     e.preventDefault();
     setLoading(true);
     setResult(null);
+
     try {
       const res = await fetch("/api/scan", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ input }),
       });
+
       const data = await res.json();
       setResult(data);
     } catch (err: unknown) {
