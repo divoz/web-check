@@ -41,6 +41,9 @@ const ScanPage = () => {
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
+        {/* <span className="inline-block rounded border px-2 py-1 text-xs">
+          Detected: 
+        </span> */}
         <button
           type="submit"
           className="px-4 py-2 rounded bg-black text-white disabled:opacity-50"

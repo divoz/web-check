@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { pool } from "@/lib/db";
+import { pool } from "@/lib/server/db";
 
 export const runtime = "nodejs"; // pg needs Node runtime (not Edge)
 
