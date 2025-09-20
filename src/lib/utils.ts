@@ -1,26 +1,26 @@
 // ---- URL helpers ----
 
-export const isUrlLike = (s: string) => /^https?:\/\//i.test(s.trim());
+export const isWebAddress = (s: string) =>
+  /^(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/i.test(
+    s.trim()
+  );
 
-export const classifyInput = (input?: string) => {
-  // always a string, always trimmed
-  const original = (input ?? "").trim();
+const startsWithHttp = (s: string) => /^https?:\/\//i.test(s);
+const startsWithWww = (s: string) => /^www\./i.test(s);
 
-  if (original === "") {
+export const classifyInput = (input: string) => {
+  const v = (input ?? "").toLowerCase().trim();
+
+  if (v === "") {
     return { kind: "empty", value: "", reason: "no input" };
   }
 
-  if (isUrlLike(original)) {
-    return { kind: "url", value: original, reason: "starts with http(s)" };
+  if (startsWithHttp(v) || startsWithWww(v)) {
+    if (isWebAddress(v)) {
+      return { kind: "url", value: v, reason: "it has a url format" };
+    }
+    return { kind: "text", value: v, reason: "invalid URL format" };
   }
 
-  if (original.startsWith("www.")) {
-    return {
-      kind: "url",
-      value: `https://${original}`,
-      reason: "starts with www",
-    };
-  }
-
-  return { kind: "text", value: original, reason: "plain text" };
+  return { kind: "text", value: v, reason: "plain text" };
 };
